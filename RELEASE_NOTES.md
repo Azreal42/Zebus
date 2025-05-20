@@ -1,6 +1,6 @@
 ## 3.2.1
 - Add stand-alone persistence implementation based on RocksDb
-- Refactor CqlStorqge
+ - Refactor CqlStorage
 
 ## 3.2.0
 - Update libzmq to 4.3.1
@@ -70,7 +70,7 @@ This version introduces a major breaking change: a dedicated `TransportMessage` 
 - Bug fixes
     - Use a circuit-breaker to reduce unresolvable peer performance impact
 - Code cleanup
-    - Make internal a few testing types that were not intented to be available outside Zebus
+    - Make internal a few testing types that were not intended to be available outside Zebus
 
 ## 1.3.1
 - Bug fixes
@@ -227,7 +227,7 @@ A client using this version needs its Directory server to be at least in 1.1 for
 
 ## 1.0.7
 - Bug fixes
-    - The Cassandra Directory server implementation was ignoring some updates because the DateTime.Kind was not set and some timestamps where erroneously converted to Utc.
+    - The Cassandra Directory server implementation was ignoring some updates because the DateTime.Kind was not set and some timestamps were erroneously converted to Utc.
 
 ## 1.0.6
 - Bug fixes
