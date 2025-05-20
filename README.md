@@ -74,6 +74,43 @@ public class MyEvent : IEvent
 
 And you're set ! This is all the code you need to send an event from one machine to the other. If you want to read more about how the magic happens, have a look at the [wiki](https://github.com/Abc-Arbitrage/Zebus/wiki). Or if you want a more detailed walkthrough (what to reference, how to start the Bus...) visit the [Quick start](https://github.com/Abc-Arbitrage/Zebus/wiki/Quick-start) page.
 
+## Snapshot example
+
+When a new peer subscribes to a message type you may want to send it an initial
+state. This is done by implementing a `SubscriptionSnapshotGenerator` that will
+publish a snapshot event to the newly subscribed peer.
+
+```csharp
+[ProtoContract]
+public class StateSnapshot : IEvent
+{
+    [ProtoMember(1)]
+    public List<int> Values { get; set; }
+}
+
+public class StateSnapshotGenerator : SubscriptionSnapshotGenerator<StateSnapshot, MyEvent>
+{
+    private readonly IRepository _repository;
+
+    public StateSnapshotGenerator(IBus bus, IRepository repository)
+        : base(bus)
+    {
+        _repository = repository;
+    }
+
+    protected override StateSnapshot GenerateSnapshot(SubscriptionsForType subscriptions)
+    {
+        return new StateSnapshot
+        {
+            Values = _repository.GetAllValues()
+        };
+    }
+}
+```
+
+Each time a peer subscribes to `MyEvent`, the bus will send the current
+`StateSnapshot` before delivering any subsequent events.
+
 # Release notes
 
 We try to stick to the [semantic versioning](http://semver.org/) principles and keep the [release notes](https://github.com/Abc-Arbitrage/Zebus/blob/master/RELEASE_NOTES.md) and [directory release notes](https://github.com/Abc-Arbitrage/Zebus/blob/master/RELEASE_NOTES_DIRECTORY.md) up to date.
