@@ -78,7 +78,7 @@
 
 ## 1.0.7
 ### Bug fixes
- - The Cassandra Directory server implementation was ignoring some updates because the DateTime.Kind was not set and some timestamps where erroneously converted to Utc.
+ - The Cassandra Directory server implementation was ignoring some updates because the DateTime.Kind was not set and some timestamps were erroneously converted to Utc.
 
 ## 1.0.6
 ### Bug fixes
